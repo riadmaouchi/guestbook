@@ -4,7 +4,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-staging
-  name: takione-www
+  name: guestbook-www
   labels:
     app.kubernetes.io/name: guestbook
     app.kubernetes.io/component: website
