@@ -3,22 +3,26 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-{{ .Values.ingress.letsEncryptIssuer }}
-  name: {{ template "AppCtx.wwwName" . }}
-  labels: {{ include "AppCtx.wwwLabels" . | nindent 4 }}
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+  name: guestbook-www
+  labels:
+    app.kubernetes.io/name: guestbook
+    app.kubernetes.io/component: website
+    app.kubernetes.io/part-of: guestbook
+    app/language: javascript
 spec:
   rules:
-  - host: {{ .Values.www.host }}
-    http:
-      paths:
-      - backend:
-          service:
-            name: {{ template "AppCtx.wwwName" . }}
-            port:
-              number: {{ .Values.www.servicePort }}
-        path: /
-        pathType: Prefix
+    - host: guestbook.staging.world.company
+      http:
+        paths:
+          - backend:
+              service:
+                name: guestbook-www
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
   tls:
-  - hosts:
-      - {{ .Values.www.host }}
-    secretName: {{ template "AppCtx.wwwName" . }}-ingress-tls
+    - hosts:
+        - guestbook.staging.world.company
+      secretName: guestbook-www-ingress-tls
