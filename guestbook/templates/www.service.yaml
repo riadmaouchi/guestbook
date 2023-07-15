@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: { { template "AppCtx.wwwName" . } }
-  labels: { { include "AppCtx.wwwLabels" . | nindent 4 } }
+  name: {{ template "AppCtx.wwwName" . }}
+  labels: {{ include "AppCtx.wwwLabels" . | nindent 4 }}
 spec:
-  selector: { { include "AppCtx.wwwSelectorLabels" . | nindent 4 } }
+  selector: {{ include "AppCtx.wwwSelectorLabels" . | nindent 4 }}
   ports:
     - protocol: TCP
-      port: { { .Values.www.servicePort } }
+      port: {{ .Values.www.servicePort }}
       targetPort: 80
