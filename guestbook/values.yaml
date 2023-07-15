@@ -1,2 +1,8 @@
+ingress:
+  letsEncryptIssuer: staging
 www:
+  imageTag: 1.0.0
+  replicaCount: 1
+  host: guestbook.staging.world.company
   servicePort: 80
+
