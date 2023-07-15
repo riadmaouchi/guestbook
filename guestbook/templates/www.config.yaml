@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap  
+metadata:  
+  name: {{ template "AppCtx.wwwName" . }}-config
+  labels: {{ include "AppCtx.wwwLabels" . | nindent 4 }}
+data:  
+  API_URL: ""

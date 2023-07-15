@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-{{ .Values.ingress.letsEncryptIssuer }}
+  name: {{ template "AppCtx.wwwName" . }}
+  labels: {{ include "AppCtx.wwwLabels" . | nindent 4 }}
+spec:
+  rules:
+  - host: {{ .Values.www.host }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ template "AppCtx.wwwName" . }}
+            port:
+              number: {{ .Values.www.servicePort }}
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+      - {{ .Values.www.host }}
+    secretName: {{ template "AppCtx.wwwName" . }}-ingress-tls
